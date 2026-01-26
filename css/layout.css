@@ -1,0 +1,74 @@
+/* css/layout.css */
+
+/* --- RESET & BASE --- */
+body {
+  margin: 0;
+  padding: 0; /* QUITAMOS el padding-left de aquí */
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden; /* Evita scroll horizontal indeseado */
+}
+
+/* --- TOPBAR --- */
+.topbar {
+  background-color: var(--bg-surface);
+  height: 60px; /* Altura fija para calcular espacios */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  position: fixed;
+  top: 0; 
+  left: 0; /* En Desktop, el sidebar pisará esto visualmente si es necesario */
+  right: 0;
+  z-index: 1001; /* Mayor que el sidebar para que la sombra caiga sobre todo */
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-color);
+  transition: left 0.3s ease; /* Animación suave si decidimos empujarlo */
+}
+
+.logo { height: 40px; width: auto; }
+
+.user-info span {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 10px;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.content {
+  padding: 10px;
+  margin-top: 70px; /* Altura del topbar */
+  margin-left: 40px; 
+  min-height: calc(100vh - 100px);
+}
+
+/* --- RESPONSIVO (Móvil/Tablet) --- */
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0 !important; /* En móvil, el contenido ocupa todo */
+    padding: 15px;
+  }
+  
+}
+
+/* Overlay para oscurecer el fondo en móvil cuando el menú abre */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1002;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}

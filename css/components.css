@@ -1,0 +1,58 @@
+/* components.css */
+
+/* --- TARJETAS / CONTENEDORES --- */
+.contenedor,
+.contenedor-datos-principales,
+.contenedor-datos-principal {
+  background-color: var(--bg-surface);
+  padding: 24px;
+  border-radius: 12px; /* Bordes más suaves */
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contenedor:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* --- GRILLAS --- */
+.contenedor-datos-principales {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(200px, 1fr)
+  ); /* Responsivo automático */
+  gap: 20px;
+}
+
+.grid-item {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.grid-item span {
+  /* Si hay valores dentro */
+  display: block;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* --- ENCABEZADOS DE SECCIÓN --- */
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--brand-cyan); /* Detalle de marca */
+  padding-bottom: 8px;
+}
+
+.encabezado p {
+  font-size: 1.1rem;
+  margin: 0;
+}

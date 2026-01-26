@@ -1,0 +1,60 @@
+/* variables.css */
+:root {
+    /* --- PALETA BASE (Marca TransCooler) --- */
+    --brand-navy: #063a61; /* Azul oscuro del texto logo */
+    --brand-navy-dark: #04253e; /* Versión más oscura para fondos dark */
+    --brand-cyan: #29a0b1; /* Turquesa de la turbina/barra */
+    --brand-red: #d92b2b; /* Rojo del Check */
+    --brand-yellow: #fabf19; /* Tu amarillo actual para acciones */
+    --brand-white: #ffffff;
+
+    /* --- COLORES SEMÁNTICOS (MODO CLARO - Por defecto) --- */
+
+    /* Fondos */
+    --bg-body: #f4f6f9; /* Un gris muy claro, mejor que blanco puro para la vista */
+    --bg-surface: #ffffff; /* Tarjetas, sidebar, topbar */
+    --bg-surface-hover: #f1f3f5;
+
+    /* Textos */
+    --text-primary: #063a61; /* Tu azul corporativo como texto principal */
+    --text-secondary: #5e6e82; /* Gris azulado para subtítulos */
+    --text-inverse: #ffffff; /* Texto sobre fondos oscuros */
+
+    /* Bordes */
+    --border-color: #e3e6ea;
+
+    /* Elementos UI */
+    --sidebar-bg: var(--brand-navy);
+    --sidebar-text: #ffffff;
+    --sidebar-hover: rgba(255, 255, 255, 0.1);
+
+    --accent-color: var(--brand-yellow);
+    --accent-text: #063a61; /* Texto oscuro sobre el amarillo para contraste */
+
+    --shadow-sm: 0 2px 4px rgba(6, 58, 97, 0.1);
+    --shadow-md: 0 4px 12px rgba(6, 58, 97, 0.15);
+    }
+
+    /* --- MODO OSCURO --- */
+    [data-theme="dark"] {
+    /* Fondos */
+    --bg-body: #0b1219; /* Casi negro, con tinte azulado */
+    --bg-surface: #152232; /* Azul muy oscuro para tarjetas */
+    --bg-surface-hover: #1c2e42;
+
+    /* Textos */
+    --text-primary: #e6edf5; /* Blanco agrisado */
+    --text-secondary: #9daab9;
+    --text-inverse: #063a61;
+
+    /* Bordes */
+    --border-color: #2c3e50;
+
+    /* Elementos UI */
+    --sidebar-bg: #0f1c29; /* Un poco más oscuro que el azul de marca */
+    --sidebar-text: #ced4da;
+
+    /* Ajustamos la sombra para que se note en oscuro o la hacemos resplandor */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+}

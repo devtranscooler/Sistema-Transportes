@@ -1,0 +1,14 @@
+/* css/main.css */
+
+/* 1. Primero las variables (IMPORTANTE: siempre debe ir primero) */
+@import url('./variables.css');
+
+/* 2. Luego la estructura base */
+@import url('./layout.css');
+
+/* 3. Después los componentes pequeños */
+@import url('./buttons.css');
+@import url('./sidebar.css');
+@import url('./components.css');
+
+/* 4. Aquí van  estilos extra  */

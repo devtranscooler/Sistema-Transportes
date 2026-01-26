@@ -1,0 +1,448 @@
+body {
+  margin: 0;
+  padding-left: 60px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+}
+.logo {
+  height: 30px;
+}
+.user-info span {
+  font-size: 18px;
+  font-weight: 500;
+  color: #063a61;
+}
+.user-info i {
+  font-size: 22px;
+  color: #063a61;
+}
+
+.sidebar {
+  background-color: #063a61;
+  color: white;
+  width: 60px;
+  height: 100vh;
+  transition: width 0.3s;
+  overflow: hidden;
+  position: fixed;
+  top: 40px;
+  left: 0;
+  z-index: 999;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0 5px;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 5px 10px;
+  display: none;
+  transition: background-color 0.3s, border 0.3s;
+  border-radius: 10px;
+}
+
+.sidebar.open li {
+  display: block;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background-color: #063a61;
+  border: 1px solid #ffffff;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 15px;
+}
+
+.submenu {
+  display: none;
+  padding-left: 15px;
+}
+
+.sidebar.open .has-submenu:hover .submenu {
+  display: block;
+}
+
+.sub-submenu {
+  display: none;
+  padding-left: 15px;
+}
+
+.submenu li:hover .sub-submenu {
+  display: block;
+}
+
+.submenu__item {
+  text-decoration: none;
+  color: white;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 24px;
+  margin-left: 18px;
+  margin-top: 40px;
+  transition: margin-left 0.3s;
+}
+
+.sidebar.open + .content {
+  margin-left: 250px;
+}
+.fab-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #fabf19;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+.fab-btn:hover {
+  background-color: #063a61;
+}
+
+.nombre-modulo {
+  display: flex;
+  align-items: top;
+  gap: 8px;
+}
+.small-add-btn {
+  background-color: #fabf19;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.small-add-btn:hover {
+  background-color: #063a61;
+}
+.upload-btn {
+  background-color: white;
+  color: #063a61;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background-color: #063a61;
+}
+
+#contenido-unidades {
+  transition: transform 0.3s ease-in-out;
+  margin-top: 55px;
+  margin-left: 20px;
+}
+
+/* Move everything to the right when sidebar opens */
+.sidebar.open ~ #contenido-unidades {
+  transform: translateX(190px); /* Adjust this value if needed */
+}
+
+/* Main grid layout for the top section */
+.contenedor-datos-principales {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 15px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-datos-principales .grid-item {
+  font-weight: bold;
+  color: #063a61;
+}
+.contenedor-datos-principal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-datos-principal .grid-item {
+  word-break: break-word;
+  font-weight: bold;
+  color: #063a61;
+}
+/* Ensure percentages display side by side */
+.porcentajes {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Section for additional data */
+.contenedor-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Box styling for Plantilla, Servicios, Documentos */
+.contenedor {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headers for sections */
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-weight: bold;
+  color: #063a61;
+}
+.encabezado p {
+  margin: 0;
+}
+
+/* Grid for plantilla and services */
+.opciones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.opcion {
+  display: contents; /* Allows each child to align properly in grid */
+}
+
+.upload {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.modal-xl {
+  max-width: 82%;
+}
+
+.btn-success {
+  background-color: #063a61 !important;
+  border-color: #063a61 !important;
+  color: white !important;
+}
+#updateButton {
+  background-color: #063a61;
+  border-color: #063a61;
+}
+
+#updateButton:hover {
+  background-color: #fabf19;
+  border-color: #fabf19;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-btn img {
+  display: block;
+}
+.btn-edit {
+  background-color: #fabf19;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-weight: bold;
+  color: #000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit:hover {
+  background-color: #063a61;
+  color: white;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-holder {
+  display: flex;
+  align-items: center;
+}
+.opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#plantillas .opcion {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+#productos .opcion,
+#autos .opcion {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+#contactos .opcion,
+#servicios .opcion {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+.grid-item {
+  margin: 0;
+}
+
+.btn-primary {
+  background-color: #fabf19;
+}
+.btn-primary:hover {
+  background-color: #063a61;
+  border-color: #063a61;
+}
+.small-delete-btn {
+  background: none;
+  border: none;
+  color: #063a61;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 14px;
+  transition: color 0.3s;
+  margin-left: 10px; /* Space between text and button */
+}
+
+.small-delete-btn:hover {
+  background: #fabf19;
+  border-radius: 50%;
+}
+
+.small-delete-btn i {
+  font-size: 16px; /* Make the trash icon a little bigger */
+}
+.action-buttons {
+  display: flex;
+  gap: 10px; /* adjust spacing as needed */
+  align-items: center;
+}
+.fab-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1050;
+  width: 56px; /* Match the width of the buttons */
+}
+
+.fab-btn,
+.fab-option {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 56px;
+  height: 56px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.fab-option {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.fab-container.show-options .fab-option {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.fab-option-1 {
+  bottom: 100px;
+  background: #fabf19;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.6rem;
+}
+
+.fab-option-2 {
+  bottom: 200px;
+  background: #fabf19;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.6rem;
+}
+.fab-option-1:hover {
+  background-color: #063a61;
+  border-color: #063a61;
+}
+
+.fab-option-2:hover {
+  background-color: #063a61;
+  border-color: #063a61;
+}

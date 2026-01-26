@@ -1,0 +1,175 @@
+/* ========================================
+   SIDEBAR - Configuración Base
+   ======================================== */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  width: 50px; /* Cerrado por defecto */
+  height: calc(100vh - 60px);
+  padding-top: 25px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  z-index: 1003;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  overflow-y: auto; 
+}
+
+/* Sidebar abierto */
+.sidebar.open {
+  width: 260px;
+}
+
+/* ========================================
+   LISTAS
+   ======================================== */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.sidebar li {
+  width: 100%;
+  position: relative;
+}
+
+/* ========================================
+   ITEMS DEL MENÚ PADRE
+   ======================================== */
+.menu__father {
+  display: flex;
+  align-items: center;
+  padding: 12px 10px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.menu__father:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--brand-white);
+  border-left: 4px solid var(--brand-yellow);
+}
+
+/* ========================================
+   ICONOS
+   ======================================== */
+.menu__father i {
+  font-size: 1.2rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* ========================================
+   TEXTOS DEL MENÚ
+   ======================================== */
+.menu-text {
+  opacity: 0; 
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+/* Cuando está abierto, mostramos el texto */
+.sidebar.open .menu-text {
+  opacity: 1;
+  width: auto;
+  margin-left: 10px;
+}
+
+/* ========================================
+   FLECHA (Chevron)
+   ======================================== */
+.arrow-icon {
+  opacity: 0; 
+  margin-left: auto !important;
+  font-size: 0.9rem !important;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sidebar.open .arrow-icon {
+  opacity: 1; 
+}
+
+/* Rotación cuando el menú está abierto */
+.has-submenu.open .arrow-icon {
+  transform: rotate(180deg);
+}
+
+/* ========================================
+   SUBMENÚS
+   ======================================== */
+.submenu {
+  max-height: 0; 
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Cuando el padre tiene .open, mostramos el submenú */
+.has-submenu.open .submenu {
+  max-height: 500px; 
+}
+
+/* ========================================
+   ITEMS HIJOS (children)
+   ======================================== */
+.menu__children {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 50px; 
+  color: var(--sidebar-text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.menu__children:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--brand-white);
+  padding-left: 55px; 
+}
+
+/* ========================================
+   BOTÓN LOGOUT
+   ======================================== */
+.btn-logout {
+  background-color: var(--brand-red);
+  margin-top: auto;
+}
+
+.btn-logout:hover {
+  background-color: #c0392b;
+  border-left: none !important;
+}
+
+/* ========================================
+   RESPONSIVE (Móvil)
+   ======================================== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 260px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* En móvil siempre mostramos texto */
+  .menu-text {
+    opacity: 1;
+    width: auto;
+    margin-left: 10px;
+  }
+
+  .arrow-icon {
+    opacity: 1;
+  }
+}

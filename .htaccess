@@ -1,0 +1,19 @@
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# Si el archivo o directorio existe, mostrarlo directamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todo a index.php
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Desactivar listado de directorios
+Options -Indexes
+
+# Página de error personalizada
+ErrorDocument 404 /index.php
+
+# Configurar tipos MIME
+AddType application/javascript .js
+AddType text/css .css

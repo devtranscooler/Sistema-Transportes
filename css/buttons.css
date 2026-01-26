@@ -1,0 +1,90 @@
+/* buttons.css */
+
+/* --- BOTÓN DE TOGGLE  --- */
+.btn-toggle-topbar {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/* --- BOTÓN FLOTANTE (FAB) --- */
+.fab-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--accent-color);
+  color: var(--accent-text);
+  border-radius: 50%; /* Perfectamente redondo */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(250, 191, 25, 0.4); /* Sombra dorada */
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.fab-btn:hover {
+  background-color: var(--brand-navy);
+  color: white;
+  transform: scale(1.1) rotate(90deg); /* Pequeña animación */
+}
+
+/* --- BOTONES DE EDICIÓN / ACCIÓN --- */
+.btn-edit {
+  background-color: var(--accent-color);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 50px; /* Pill shape */
+  padding: 8px 24px;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: var(--brand-navy);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.small-add-btn {
+  background-color: var(--accent-color);
+  color: var(--accent-text);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px; /* Un poco más grande para ser clicable */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.small-add-btn:hover {
+  background-color: var(--brand-cyan); /* Cambio a Cyan al hover */
+  color: white;
+}
+
+/* Botones de eliminar (Iconos) */
+.small-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.small-delete-btn:hover {
+  background-color: rgba(217, 43, 43, 0.1); /* Fondo rojo muy suave */
+  color: var(--brand-red);
+}
