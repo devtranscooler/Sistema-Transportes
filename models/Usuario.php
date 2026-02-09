@@ -23,9 +23,24 @@ class Usuario extends Model
         'apellidoM',
         'email',
         'password',
-        'idTipoUsuario',
-        'id_sucursal',
-        'estatus '
+        'idRol',
+        'fecNac',
+        'noEmpleado',
+        'movil',
+        'foto',
+        'fecContratacion',
+        'diasVacaciones',
+        'diasVacDisfrutados',
+        'estatus',
+        'puesto',
+        'area',
+        'cedis',
+        'telefono',
+        'jefeInmediato'
+    ];
+    // Campos protejidos (protecion contra actualizaciones masivas)
+    protected $protected = [
+        'password'
     ];
 
     /**
@@ -85,8 +100,6 @@ class Usuario extends Model
         $_SESSION['ID_USUARIO'] = $this->id;
         $_SESSION['NAME'] = $this->getNombreCompleto();
         $_SESSION['EMAIL'] = $this->email;
-        $_SESSION['ID_TIPO_USUARIO'] = $this->idTipoUsuario;
-        $_SESSION['ID_SUCURSAL'] = $this->id_sucursal;
     }
 
     /**
@@ -149,7 +162,7 @@ class Usuario extends Model
      * 
      * @return array
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         $sql = "SELECT 
                     m.id_menu,
@@ -184,7 +197,7 @@ class Usuario extends Model
      * Convierte una lista plana de menús en estructura jerárquica
      * Ahora maneja correctamente NULL, '', y valores vacíos
      */
-    private function buildMenuTree($menus, $parentId = null)
+    private function buildMenuTree($menus, $parentId = null): array
     {
         $branch = [];
 
@@ -248,6 +261,41 @@ class Usuario extends Model
     }
 
     /**
+     * SET PASSWORD - Establecer contraseña manualmente
+     * 
+     * Uso desde controlador: $usuario->setPassword('nueva123');
+     */
+    public function setPassword($plainPassword)
+    {
+        $this->attributes['password'] = password_hash($plainPassword, PASSWORD_BCRYPT);
+        return $this;
+    }
+
+    /**
+     * SAVE  erencia del padre 
+     * 
+     * Sirve para hasear la password 
+     */
+    public function save()
+    {
+        if (in_array('password', $this->modifiedFields)) {
+            if (!empty($this->password) && !$this->isPasswordHashed($this->password)) {
+                $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+            }
+        }
+
+        return parent::save();
+    }
+
+    /**
+     * Verificar si password está hasheado
+     */
+    private function isPasswordHashed($password)
+    {
+        return preg_match('/^\$2[ayb]\$.{56}$/', $password);
+    }
+
+    /**
      * VALIDATE - Validar datos del usuario
      * 
      * @return array Errores encontrados
@@ -258,19 +306,55 @@ class Usuario extends Model
 
         if (empty($this->attributes['nombre'])) {
             $errors[] = "El nombre es requerido";
-            dd(['error' => $errors, 'nombre' => $this->nombre]);
+        }
+
+        if (empty($this->attributes['apellidoP'])) {
+            $errors[] = "El apellido paterno es requerido";
         }
 
         if (empty($this->attributes['email'])) {
             $errors[] = "El email es requerido";
-        } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (!filter_var($this->attributes['email'], FILTER_VALIDATE_EMAIL)) {
             $errors[] = "El email no es válido";
         }
 
+        // Validar que el email no exista (solo en creación o si cambió)
+        if (!$this->exists || $this->emailChanged()) {
+            $existing = static::where('email', $this->attributes['email']);
+            if (!empty($existing) && $existing[0]->id != $this->id) {
+                $errors[] = "El email ya está registrado";
+            }
+        }
+
+        // Validar contraseña solo en creación
         if (!$this->exists && empty($this->attributes['password'])) {
             $errors[] = "La contraseña es requerida";
         }
 
+        if (
+            !empty($this->attributes['password']) &&
+            strlen($this->attributes['password']) < 6
+        ) {
+            $errors[] = "La contraseña debe tener al menos 6 caracteres";
+        }
+
+        /* if (empty($this->attributes['idRol'])) {
+            $errors[] = "El rol es requerido";
+        } */
+
         return $errors;
+    }
+
+    /**
+     * VALIDATE - Validar si el email cambio
+     * 
+     * @return bool 
+     */
+    private function emailChanged()
+    {
+        if (!$this->exists) return false;
+
+        $original = static::find($this->id);
+        return $original->email !== $this->attributes['email'];
     }
 }

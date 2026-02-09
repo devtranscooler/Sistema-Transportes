@@ -1,44 +1,41 @@
 <?php
-/**
- * Clase Model - La mamá de todos los modelos
- * 
- * Esta clase base permite que todos tus modelos hereden funcionalidades comunes
- * como: crear, leer, actualizar, eliminar (CRUD) sin tener que escribir SQL cada vez.
- * 
- */
-
 class Model {
-    protected $db;              // Conexión a la base de datos
-    protected $table;           // Nombre de la tabla 
-    protected $primaryKey = 'id'; // Llave primaria
-    protected $fillable = [];   // Campos permitidos para llenar
-    protected $attributes = []; // Datos actuales del modelo
-    protected $exists = false;  // ¿Ya existe en BD?
+    protected $db;
+    protected $table;
+    protected $primaryKey = 'id';
+    protected $fillable = [];
+    protected $protected = [];
+    protected $attributes = [];
+    protected $exists = false;
+    
+    // 🔥 Inicializar como array vacío directamente
+    protected $modifiedFields = [];
 
     public function __construct() {
-        // Inicializar conexión a BD
         $this->db = Database::getInstance();
     }
 
-    /**
-     * Método mágico para acceder a propiedades como si fueran normales
-     * $usuario->nombre es más bonito que $usuario->getAttribute('nombre')
-     */
-    public function __get($name) {
-        return $this->attributes[$name] ?? null;
-    }
-
     public function __set($name, $value) {
-        // Solo permitir campos que estén en $fillable (seguridad)
         if (in_array($name, $this->fillable)) {
+            // 🔥 Asegurar que modifiedFields esté inicializado
+            if (!is_array($this->modifiedFields)) {
+                $this->modifiedFields = [];
+            }
+            
+            if (!isset($this->attributes[$name]) || $this->attributes[$name] !== $value) {
+                $this->modifiedFields[] = $name;
+            }
+            
             $this->attributes[$name] = $value;
         }
     }
 
+    public function __get($name) {
+        return $this->attributes[$name] ?? null;
+    }
+
     /**
-     * FIND - Buscar un registro por ID
-     * 
-     * Uso: $usuario = Usuario::find(5);
+     * FIND - Buscar por ID
      */
     public static function find($id) {
         $instance = new static();
@@ -52,6 +49,10 @@ class Model {
         if ($row = $result->fetch_assoc()) {
             $instance->fill($row);
             $instance->exists = true;
+            
+            // 🔥 Asegurar que modifiedFields esté inicializado
+            $instance->modifiedFields = [];
+            
             return $instance;
         }
         
@@ -59,10 +60,7 @@ class Model {
     }
 
     /**
-     * WHERE - Buscar con condiciones personalizadas
-     * 
-     * Uso: $usuarios = Usuario::where('email', 'email@example.com');
-     * Uso: $activos = Usuario::where('status', 'activo')->get();
+     * WHERE - Buscar con condiciones
      */
     public static function where($column, $value) {
         $instance = new static();
@@ -77,6 +75,10 @@ class Model {
             $model = new static();
             $model->fill($row);
             $model->exists = true;
+            
+            // 🔥 Asegurar que modifiedFields esté inicializado
+            $model->modifiedFields = [];
+            
             $models[] = $model;
         }
         
@@ -84,9 +86,7 @@ class Model {
     }
 
     /**
-     * ALL - Traer todos los registros
-     * 
-     * Uso: $usuarios = Usuario::all();
+     * ALL - Traer todos
      */
     public static function all() {
         $instance = new static();
@@ -99,6 +99,10 @@ class Model {
             $model = new static();
             $model->fill($row);
             $model->exists = true;
+            
+            // 🔥 Asegurar que modifiedFields esté inicializado
+            $model->modifiedFields = [];
+            
             $models[] = $model;
         }
         
@@ -106,14 +110,7 @@ class Model {
     }
 
     /**
-     * SAVE - Guardar o actualizar
-     * 
-     * Si el registro existe (tiene ID), hace UPDATE
-     * Si no existe, hace INSERT
-     * 
-     * Uso: 
-     *   $usuario->nombre = "User";
-     *   $usuario->save();
+     * SAVE
      */
     public function save() {
         if ($this->exists) {
@@ -124,14 +121,13 @@ class Model {
     }
 
     /**
-     * INSERT - Crear nuevo registro
+     * INSERT
      */
     protected function insert() {
         $fields = [];
         $placeholders = [];
         $values = [];
 
-        // Construir query dinámicamente basado en $fillable
         foreach ($this->fillable as $field) {
             if (isset($this->attributes[$field])) {
                 $fields[] = $field;
@@ -147,9 +143,9 @@ class Model {
         $result = $this->db->query($sql, $values);
 
         if ($result) {
-            // Obtener el ID del nuevo registro
             $this->attributes[$this->primaryKey] = $this->db->getLastInsertId();
             $this->exists = true;
+            $this->modifiedFields = [];
             return true;
         }
 
@@ -157,32 +153,51 @@ class Model {
     }
 
     /**
-     * UPDATE - Actualizar registro existente
+     * UPDATE
      */
     protected function update() {
         $fields = [];
         $values = [];
 
         foreach ($this->fillable as $field) {
+            // SALTAR campos protegidos que NO fueron modificados
+            if (in_array($field, $this->protected)) {
+                // Asegurar que modifiedFields sea un array
+                if (!is_array($this->modifiedFields)) {
+                    $this->modifiedFields = [];
+                }
+                
+                if (!in_array($field, $this->modifiedFields)) {
+                    continue;
+                }
+            }
+
             if (isset($this->attributes[$field])) {
                 $fields[] = "$field = ?";
                 $values[] = $this->attributes[$field];
             }
         }
 
+        if (empty($fields)) {
+            return true;
+        }
+
         $values[] = $this->attributes[$this->primaryKey];
 
+        
         $sql = "UPDATE {$this->table} 
                 SET " . implode(', ', $fields) . " 
                 WHERE {$this->primaryKey} = ?";
-
-        return $this->db->query($sql, $values);
+                
+        $result = $this->db->query($sql, $values);
+                
+        $this->modifiedFields = [];
+        
+        return $result;
     }
 
     /**
-     * DELETE - Eliminar registro
-     * 
-     * Uso: $usuario->delete();
+     * DELETE
      */
     public function delete() {
         if (!$this->exists) {
@@ -196,23 +211,23 @@ class Model {
     }
 
     /**
-     * FILL - Llenar el modelo con datos
+     * FILL
      */
-    protected function fill(array $data) {
+    public function fill(array $data) {
         foreach ($data as $key => $value) {
             $this->attributes[$key] = $value;
         }
     }
 
     /**
-     * TO_ARRAY - Convertir a array
+     * TO_ARRAY
      */
     public function toArray() {
         return $this->attributes;
     }
 
     /**
-     * TO_JSON - Convertir a JSON
+     * TO_JSON
      */
     public function toJson() {
         return json_encode($this->attributes);

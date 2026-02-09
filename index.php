@@ -27,6 +27,7 @@ $router = new Router();
 
 // Cargar definición de rutas (web.php)
 require_once BASE_PATH . '/routes/web.php';
+require_once BASE_PATH . '/routes/ajax.php';
 
 // Ejecutar el router
 try {

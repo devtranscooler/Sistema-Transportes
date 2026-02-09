@@ -151,15 +151,13 @@ class Database {
         // Ejecutar
         $stmt->execute();
 
-        // Obtener resultado
-        $result = $stmt->get_result();
-        
-        // Si no hay resultado (INSERT, UPDATE, DELETE), retornar true/false
-        if ($result === false) {
-            return $stmt->affected_rows > 0;
+        // Si la consulta devuelve resultados (SELECT)
+        if ($stmt->field_count > 0) {
+            return $stmt->get_result();
         }
 
-        return $result;
+        // Si NO devuelve resultados (INSERT, UPDATE, DELETE)
+        return $stmt->affected_rows >= 0;
     }
 
     /**

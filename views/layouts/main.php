@@ -9,15 +9,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <title><?= $title ?? 'Transcooler' ?></title>
 
     <!-- ========================================== -->
-    <!-- jQuery (DEBE IR ANTES de Bootstrap y DataTables) -->
+    <!-- jQuery -->
     <!-- ========================================== -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- ========================================== -->
-    <!-- jQuery UI (si lo necesitas) -->
+    <!-- jQuery UI  -->
     <!-- ========================================== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" type="text/javascript"></script> 
 
@@ -32,16 +33,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- ========================================== -->
-    <!-- DataTables CSS (Bootstrap 5 Integration) -->
+    <!-- DataTables CSS (Bootstrap 5) -->
     <!-- ========================================== -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
 
-
     <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
 
     <?= $additionalCss ?? '' ?>
+
+    <script src="<?= asset('js/ajax.js') ?>"></script>
 </head>
 
 <body>
@@ -152,7 +154,9 @@
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
+<!-- ========================================== -->
 <!-- Buttons (para exportar a Excel, PDF, etc.) -->
+<!-- ========================================== -->
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -161,7 +165,16 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
-<!--<script src="asset('js/app.js') "></script>-->
+<!-- ========================================== -->
+<!-- SweetAlert2 para alertas bonitas -->
+<!-- ========================================== -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- ========================================== -->
+<!-- Scripts customs -->
+<!-- ========================================== -->
+<script src="<?= asset('js/app.js') ?>"></script>
+
 
 <?= $additionalJs ?? '' ?>
 

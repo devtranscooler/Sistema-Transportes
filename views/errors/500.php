@@ -11,9 +11,9 @@
     <div class="container">
         <div class="row justify-content-center" style="min-height: 100vh; align-items: center;">
             <div class="col-md-6 text-center">
-                <h1 class="display-1 text-primary">505</h1>
-                <h2>¡Ups! vista no encontrada</h2>
-                <p class="text-muted">La vista que buscas no existe o fue movida.</p>
+                <h1 class="display-1 text-primary">500</h1>
+                <h2>¡Ups! Ocurrio un error inesperado</h2>
+                <p class="text-muted"><?= htmlspecialchars($message) ?></p>
                 <a href="<?= url('dashboard') ?>" class="btn btn-primary">Ir al Dashboard</a>
             </div>
         </div>

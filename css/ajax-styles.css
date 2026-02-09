@@ -1,0 +1,474 @@
+/**
+ * ========================================
+ * ESTILOS AJAX - Loaders y efectos
+ * ========================================
+ */
+
+/* ========================================
+   LOADER GLOBAL (cuando body.loading)
+   ======================================== */
+
+body.loading {
+    cursor: wait;
+}
+
+body.loading::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ========================================
+   SPINNER / LOADER
+   ======================================== */
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Loader grande (para contenedores) */
+.loader {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.loader::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+/* ========================================
+   SKELETON LOADER (carga de placeholders)
+   ======================================== */
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-text {
+    height: 16px;
+    margin: 8px 0;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 60%;
+    margin: 12px 0;
+}
+
+.skeleton-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* ========================================
+   ANIMACIONES DE ENTRADA/SALIDA
+   ======================================== */
+
+/* Fade In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Slide In */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+/* Zoom In */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.zoom-in {
+    animation: zoomIn 0.3s ease-in-out;
+}
+
+/* ========================================
+   BARRA DE PROGRESO
+   ======================================== */
+
+.progress-bar-container {
+    width: 100%;
+    height: 30px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 15px;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* ========================================
+   ESTADOS DE FORMULARIOS
+   ======================================== */
+
+/* Input con validación en tiempo real */
+input.validating {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="%233498db" stroke-width="2"><animate attributeName="stroke-dasharray" from="0,44" to="44,0" dur="1s" repeatCount="indefinite"/></circle></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+input.valid {
+    border-color: #2ecc71;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%232ecc71" d="M13.5 3L6 10.5 2.5 7"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+input.invalid {
+    border-color: #e74c3c;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23e74c3c" d="M12 4L4 12M4 4l8 8"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+/* ========================================
+   TOAST / NOTIFICACIONES
+   ======================================== */
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10000;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.toast.success {
+    border-left: 4px solid #2ecc71;
+}
+
+.toast.error {
+    border-left: 4px solid #e74c3c;
+}
+
+.toast.warning {
+    border-left: 4px solid #f39c12;
+}
+
+.toast.info {
+    border-left: 4px solid #3498db;
+}
+
+/* Auto-cerrar toast */
+@keyframes slideOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.toast.closing {
+    animation: slideOut 0.3s ease-in-out forwards;
+}
+
+/* ========================================
+   BADGE DE NOTIFICACIÓN
+   ======================================== */
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* ========================================
+   TABLA CON EFECTOS
+   ======================================== */
+
+.ajax-table tr {
+    transition: all 0.3s ease;
+}
+
+.ajax-table tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+}
+
+/* Fila eliminándose */
+.ajax-table tr.deleting {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: all 0.5s ease;
+}
+
+/* Fila nueva */
+.ajax-table tr.new {
+    animation: highlightRow 2s ease;
+}
+
+@keyframes highlightRow {
+    0% {
+        background-color: #d4edda;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* ========================================
+   BOTONES CON ESTADOS
+   ======================================== */
+
+button[disabled], .btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    position: relative;
+}
+
+button.loading, .btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+button.loading::after, .btn.loading::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+/* ========================================
+   AUTOCOMPLETE / BÚSQUEDA
+   ======================================== */
+
+.autocomplete-results {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+    background: #f0f0f0;
+}
+
+.autocomplete-item strong {
+    color: #3498db;
+}
+
+/* ========================================
+   MODAL OVERLAY
+   ======================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    animation: zoomIn 0.3s ease;
+}
+
+/* ========================================
+   DRAG & DROP UPLOAD
+   ======================================== */
+
+.dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.dropzone:hover,
+.dropzone.dragover {
+    border-color: #3498db;
+    background: #f0f8ff;
+}
+
+.dropzone.dragover {
+    transform: scale(1.02);
+}
+
+/* ========================================
+   ESTADOS DE GUARDADO
+   ======================================== */
+
+.save-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #666;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.save-status.saving {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.save-status.saved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.save-status.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .toast {
+        right: 10px;
+        left: 10px;
+        top: 10px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+}

@@ -7,9 +7,6 @@
  * 
  */
 
-require_once __DIR__ . '/../models/Usuario.php';
-require_once __DIR__ . '/../core/View.php';
-
 class AuthController
 {
 
